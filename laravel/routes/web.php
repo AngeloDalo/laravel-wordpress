@@ -19,4 +19,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth') //verifichera se sono loggato oppure no
+    ->namespace('Admin')
+    ->name('admin.') //name
+    ->prefix('admin') //uri
+    ->group(function () {
+        Route::get('/', 'HomeController@index')
+            ->name('home');
+        Route::resource('posts', 'PostController');
+    });
