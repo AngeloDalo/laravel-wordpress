@@ -10,5 +10,6 @@
         </div>
     </div>
     <a class="btn btn-primary mt-5" href="{{url()->previous()}}">CANCEL</a>
+    <a class="btn btn-primary mt-5" href="{{ route('admin.posts.index') }}">HOME</a>
 </div>
 @endsection

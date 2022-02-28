@@ -79,7 +79,7 @@
                 </div>
             @endif
 
-            <div class="content container-welcome">
+            <div class="content container">
                 <div class="title m-b-md">
                     Boolpress
                 </div>
