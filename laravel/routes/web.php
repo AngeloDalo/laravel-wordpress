@@ -19,7 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware('auth') //verifichera se sono loggato oppure no
+
+Route::middleware('auth')
     ->namespace('Admin')
     ->name('admin.') //name
     ->prefix('admin') //uri
