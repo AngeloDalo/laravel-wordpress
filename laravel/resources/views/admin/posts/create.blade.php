@@ -9,7 +9,7 @@
         @method('POST')
         <div class="mb-3 mt-3">
           <label for="eyelet" class="form-label text-uppercase fw-bold">Eyelet</label>
-          <input type="text" class="form-control" id="eyelet" name="eyelet">
+          <input type="text" class="form-control" id="eyelet" name="eyelet" value="{{ old('eyelet') }}">
           @error('eyelet')
             <div class="alert alert-danger">{{ $message }}</div>
           @enderror
@@ -17,7 +17,7 @@
         </div>
         <div class="mb-3">
           <label for="title" class="form-label text-uppercase fw-bold">Title</label>
-          <input type="text" class="form-control" id="title" name="title">
+          <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
         </div>
         @error('title')
           <div class="alert alert-danger">{{ $message }}</div>
@@ -25,7 +25,7 @@
 
         <div class="mb-3">
             <label for="content" class="form-label text-uppercase fw-bold">content</label>
-            <input type="text" class="form-control" id="content" name="content">
+            <input type="text" class="form-control" id="content" name="content" value="{{ old('content') }}">
         </div>
         @error('content')
           <div class="alert alert-danger">{{ $message }}</div>

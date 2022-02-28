@@ -79,9 +79,9 @@
                 </div>
             @endif
 
-            <div class="content">
+            <div class="content container-welcome">
                 <div class="title m-b-md">
-                    Laravel
+                    Boolpress
                 </div>
 
                 <div class="links">

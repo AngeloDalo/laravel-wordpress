@@ -53,12 +53,13 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
+                                <a class="nav-link" href="{{ route('admin.posts.index') }}">All Post</a>
+                                <a class="nav-link" href="{{ route('admin.posts.create') }}">Add Post</a>
                                 <a class="nav-link" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                              document.getElementById('logout-form').submit();">
+                                          document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-                                <a class="nav-link" href="{{ route('admin.posts.create') }}">Add Post</a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -81,6 +82,8 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        @include('admin.posts.partials.footer')
     </div>
 </body>
 </html>
