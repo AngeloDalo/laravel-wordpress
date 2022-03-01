@@ -73,9 +73,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -85,9 +85,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        $validateData = $request->validate([
+            'eyelet' => 'required',
+            'title' => 'required|max:255',
+            'content' => 'required',
+        ]);
+        $post->slug = $post->createSlug($data['title']);
+        return redirect()->route('admin.posts.show', $comic->slug);
     }
 
     /**
