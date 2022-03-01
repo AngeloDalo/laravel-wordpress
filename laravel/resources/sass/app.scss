@@ -12,6 +12,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// importiamo icone
+@import "~bootstrap-icons/font/bootstrap-icons.scss";
+
 @import "partials/_base";
 @import "partials/_commons";
 @import "partials/_show";
