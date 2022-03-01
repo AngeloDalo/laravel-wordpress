@@ -39,31 +39,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+
         $validateData = $request->validate([
             'eyelet' => 'required',
             'title' => 'required|max:255',
             'content' => 'required',
         ]);
 
-        $data = $request->all();
+        $post = new Post();
+        $post->fill($data);
+        $post->slug = $post->createSlug($data['title']);
+        $post->save();
 
-        $slug = Str::slug($data['title'], '-');
-        $postPresente = Post::where('slug', $slug)->first();
-
-        $counter = 0;
-        while ($postPresente) {
-            $slug = $slug . '-' . $counter;
-            $postPresente = Post::where('slug', $slug)->first();
-            $counter++;
-        }
-
-        $newPost = new Post();
-
-        $newPost->fill($data);
-        $newPost->slug = $slug;
-        $newPost->save();
-
-        return redirect()->route('admin.posts.show', ['post' => $newPost]);
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
@@ -106,8 +95,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('admin.posts.index')->with('status', "Post id $post->id deleted");
     }
 }

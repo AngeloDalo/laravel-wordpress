@@ -7,7 +7,7 @@
         <h1 class="h1 text-uppercase">Admin - All Posts</h1>
     </div>
     <!--message delate-->
-    {{-- <div class="row">
+     <div class="row">
         <div class="col">
             @if (session('status'))
                 <div class="alert alert-success">
@@ -15,7 +15,7 @@
                 </div>
             @endif
         </div>
-    </div> --}}
+    </div> 
     <div class="row">
         <div class="col">
              <table class="table table-primary">
@@ -23,7 +23,10 @@
                     <tr class="table-primary">
                         <th>Title</th>
                         <th>Eyelet</th>
+                        <th>Updated at</th>
                         <th>View</th>
+                        <th>Update</th>
+                        <th>Delate</th>
                         {{-- <th>Update</th>
                         <th>Delate</th> --}}
                     </tr>
@@ -33,15 +36,16 @@
                     <tr>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->eyelet }}</td>
-                        <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post) }}">View</a></td>
-                        {{-- <td><a class="btn btn-primary" href="{{ route('posts.edit', $post) }}">Update</a></td>
+                        <td>{{ $post->updated_at }}</td>
+                        <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a></td>
+                        <td><a class="btn btn-primary" href="{{ route('admin.posts.edit', $post->slug) }}">Update</a></td>
                         <td>
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="post">
+                            <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input class="btn btn-danger" type="submit" value="Delete">
                             </form>
-                        </td> --}}
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
