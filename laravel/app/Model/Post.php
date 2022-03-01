@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
