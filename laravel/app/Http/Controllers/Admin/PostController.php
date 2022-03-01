@@ -40,6 +40,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
 
         $validateData = $request->validate([
             'eyelet' => 'required',

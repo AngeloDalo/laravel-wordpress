@@ -1,9 +1,10 @@
 <?php
 
-use Faker\Generator as Faker;
-use Illuminate\Support\Str;
-use App\Model\Post;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+use Faker\Generator as Faker;
+use App\Model\Post;
+use App\User;
 
 class PostSeeder extends Seeder
 {
@@ -19,7 +20,10 @@ class PostSeeder extends Seeder
             $newPost->eyelet = $faker->sentence(3, true);
             $newPost->title = $faker->sentence(3, true);
             $newPost->content = $faker->paragraphs(5, true);
-            $newPost->slug = Str::slug($newPost->title . '-' . $i, '-');
+            
+            $title = "$newPost->title-$i";
+            $newPost->slug = Str::slug($title, '-');
+            $newPost->user_id = User::inRandomOrder()->first()->id;
             $newPost->save();
         }
     }

@@ -11,9 +11,16 @@ class Post extends Model
         'title',
         'content',
         'slug',
+        'user_id',
         'created_at',
         'updated_at',
     ];
+
+    //1 to *
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 
     /**
      * Get the route key for the model.
