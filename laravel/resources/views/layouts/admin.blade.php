@@ -26,28 +26,18 @@
             <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem;">
                 <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                   <li class="nav-item">
-                    <a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <a href="{{ route('admin.posts.index') }}" class="nav-link active py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                         <i class="fas fa-home"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                        <i class="fas fa-tachometer"></i>
+                    <a href="{{ route('admin.posts.create') }}" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
+                      <i class="fas fa-plus"></i>
                     </a>
                   </li>
                   <li>
                     <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                        <i class="fas fa-calendar-alt"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
-                        <i class="fas fa-border-all"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Customers">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-calendar-alt"></i> Category
                     </a>
                   </li>
                 </ul>
@@ -57,7 +47,7 @@
                     <span>{{ Auth::user()->name }}</span>
                   </a>
                   <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin.posts.create') }}">New project...</a></li>
                     <li><a class="dropdown-item" href="#">Settings</a></li>
                     <li><a class="dropdown-item" href="#">Profile</a></li>
                     <li><hr class="dropdown-divider"></li>

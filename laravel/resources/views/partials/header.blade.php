@@ -29,6 +29,7 @@
                     <li class="nav-item dropdown d-flex">
                         <a class="nav-link" href="{{ route('admin.posts.index') }}">All Post</a>
                         <a class="nav-link" href="{{ route('admin.posts.create') }}">Add Post</a>
+                        <a class="nav-link" href="#">Category</a>
                         {{-- logout con input button --}}
                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf

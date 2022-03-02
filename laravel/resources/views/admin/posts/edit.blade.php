@@ -1,6 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
+<div class="row">
+  @if (session('status'))
+      <div class="alert alert-danger">
+          {{ session('status') }}
+      </div>
+  @endif
+</div>
     <div class="container p-5">
         <div class="row">
             <div class="col">

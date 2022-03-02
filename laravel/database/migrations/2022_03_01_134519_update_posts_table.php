@@ -15,7 +15,7 @@ class UpdatePostsTable extends Migration
     {
         //avendo già creato la tabella faccio update in cui aggiungo foreign key per 1 to *
         Schema::table('posts', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->after('id')->nullable();
+            $table->unsignedBigInteger('user_id')->after('id')->nullable(); //se abbiamo già dati bisogna mettere nullable per evitare errori
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')->onDelete('set null');

@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="container p-5">
+  <div class="row">
+    @if (session('status'))
+        <div class="alert alert-danger">
+            {{ session('status') }}
+        </div>
+    @endif
+  </div>
     <div class="row">
       <form action="{{ route('admin.posts.store') }}" method="post">
         <a class="btn btn-primary" href="{{url()->previous()}}">CANCEL</a>
