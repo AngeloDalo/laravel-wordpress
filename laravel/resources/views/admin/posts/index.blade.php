@@ -38,13 +38,19 @@
                         <td>{{ $post->eyelet }}</td>
                         <td>{{ $post->updated_at }}</td>
                         <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a></td>
-                        <td><a class="btn btn-primary" href="{{ route('admin.posts.edit', $post->slug) }}">Update</a></td>
                         <td>
-                            <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <input class="btn btn-danger" type="submit" value="Delete">
-                            </form>
+                            @if (Auth::user()->id === $post->user_id)
+                                <a class="btn btn-primary" href="{{ route('admin.posts.edit', $post->slug) }}">Update</a>
+                            @endif
+                        </td>
+                        <td>
+                            @if (Auth::user()->id === $post->user_id)
+                                <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input class="btn btn-danger" type="submit" value="Delete">
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

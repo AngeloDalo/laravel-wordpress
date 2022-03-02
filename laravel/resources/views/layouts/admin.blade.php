@@ -40,6 +40,12 @@
                         <i class="fas fa-calendar-alt"></i> Category
                     </a>
                   </li>
+                  <li>
+                    <a class="nav-link py-3 border-bottom" href="{{ route('admin.posts.indexUser') }}">
+                        <i class="bi bi-files"></i> <br>
+                        My Posts
+                    </a>
+                  </li>
                 </ul>
                 <div class="dropdown border-top">
                   <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">

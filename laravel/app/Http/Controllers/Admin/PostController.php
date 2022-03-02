@@ -17,7 +17,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
+        return view('admin.posts.index', compact('posts'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexUser()
+    {
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -39,14 +50,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $data['user_id'] = Auth::user()->id;
-
         $validateData = $request->validate([
             'eyelet' => 'required',
             'title' => 'required|max:255',
             'content' => 'required',
         ]);
+
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
 
         $post = new Post();
         $post->fill($data);
@@ -94,6 +105,7 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
         $updated = $post->update($data);
 
 
@@ -112,6 +124,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        //non posso cancellare file che non sono miei
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+
         $post->delete();
         return redirect()->route('admin.posts.index')->with('status', "Post id $post->id deleted");
     }
