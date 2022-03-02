@@ -88,14 +88,11 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id;
-        $validateData = $request->validate([
-            'eyelet' => 'required',
-            'title' => 'required|max:255',
-            'content' => 'required',
-        ]);
-        $post->slug = $post->createSlug($data['title']);
-        return redirect()->route('admin.posts.show', $comic->slug);
+        $updated = $post->update($data);
+        if (!$updated) {
+            dd('Update fallito');
+        }
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
