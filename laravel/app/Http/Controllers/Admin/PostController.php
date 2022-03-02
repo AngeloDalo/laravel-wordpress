@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Model\Post;
-
+use App\Model\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +39,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', ['categories' => $categories]);
     }
 
     /**
@@ -54,6 +55,7 @@ class PostController extends Controller
             'eyelet' => 'required',
             'title' => 'required|max:255',
             'content' => 'required',
+            'category_id' => 'exists:App\Model\Category,id'
         ]);
 
         $data = $request->all();
@@ -86,7 +88,12 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+        $categories = Category::all();
+        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
+        
     }
 
     /**
@@ -102,16 +109,30 @@ class PostController extends Controller
             'eyelet' => 'required',
             'title' => 'required|max:255',
             'content' => 'required',
+            'category_id' => 'exists:App\Model\Category,id'
         ]);
 
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id;
-        $updated = $post->update($data);
-
-
-        if (!$updated) {
-            dd('Update fallito');
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
         }
+
+        if ($data['eyelet'] != $post->eyelet) {
+            $post->eyelet = $data['eyelet'];
+            $post->slug = $post->createSlug($data['eyelet']);
+        }
+        if ($data['title'] != $post->title) {
+            $post->title = $data['title'];
+            $post->slug = $post->createSlug($data['title']);
+        }
+        if ($data['content'] != $post->content) {
+            $post->content = $data['content'];
+        }
+        if ($data['category_id'] != $post->category_id) {
+            $post->category_id = $data['category_id'];
+        }
+
+        $post->update($data);
 
         return redirect()->route('admin.posts.show', $post->slug);
     }

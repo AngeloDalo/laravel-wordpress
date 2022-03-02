@@ -22,11 +22,25 @@
                     @csrf
                     @method('PATCH')
                     <div class="mb-3 mt-3">
+                        <select class="form-select" name="category_id">
+                          <option value="">Select a category</option>
+                            @foreach ($categories as $category)
+                              <option @if (old('category_id', $post->category_id) == $category->id) selected @endif value="{{ $category->id }}">
+                              {{ $category->name }} - {{ $category->id }}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                          <div class="alert alert-danger mt-3">
+                            {{ $message }}
+                          </div>
+                        @enderror
+                        
                         <label for="eyelet" class="form-label text-uppercase fw-bold">Eyelet</label>
                         <input type="text" class="form-control" id="eyelet" name="eyelet" value="{{ $post->eyelet }}">
                         @error('eyelet')
                           <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
+                        
               
                       </div>
                       <div class="mb-3">

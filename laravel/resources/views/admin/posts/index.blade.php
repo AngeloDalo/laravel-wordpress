@@ -23,12 +23,11 @@
                     <tr class="table-primary">
                         <th>Title</th>
                         <th>Eyelet</th>
+                        <th>Category</th>
                         <th>Updated at</th>
                         <th>View</th>
                         <th>Update</th>
                         <th>Delate</th>
-                        {{-- <th>Update</th>
-                        <th>Delate</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +35,9 @@
                     <tr>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->eyelet }}</td>
+                        <td> @if ($post->category_id !== null)
+                            {{ $post->category()->first()->name }}
+                        @endif </td>
                         <td>{{ $post->updated_at }}</td>
                         <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a></td>
                         <td>

@@ -4,6 +4,9 @@
 <div class="container show p-5">
     <div class="row">
         <div class="col">
+            @if ($post->category_id !== null)
+                <h3>Category: {{ $post->category()->first()->name }} </h2>
+            @endif
              <h2>{{ $post->eyelet }}</h2>
              <h1>{{ $post->title }}</h1>
              <span>{{ $post->content }}</span>
