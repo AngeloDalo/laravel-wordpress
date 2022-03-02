@@ -36,7 +36,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                    <a href="{{ route('admin.categories.index') }}" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                         <i class="fas fa-calendar-alt"></i> Category
                     </a>
                   </li>
