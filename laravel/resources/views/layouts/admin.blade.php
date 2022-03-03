@@ -32,7 +32,12 @@
                   </li>
                   <li>
                     <a href="{{ route('admin.posts.create') }}" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                      <i class="fas fa-plus"></i>
+                      <i class="fas fa-plus"></i> <br> add Post
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ route('admin.categories.create') }}" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
+                      <i class="fas fa-plus"></i> <br> add Category
                     </a>
                   </li>
                   <li>

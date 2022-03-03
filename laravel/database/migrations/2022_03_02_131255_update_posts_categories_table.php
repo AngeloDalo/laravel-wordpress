@@ -15,11 +15,11 @@ class UpdatePostsCategoriesTable extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->unsignedBigInteger('category_id')
-                ->after('id')
+                ->after('id') //after solamente nelle update
                 ->nullable();
             $table->foreign('category_id')
                 ->references('id')
-                ->on('categories')->onDelete('set null');
+                ->on('categories')->onDelete('set null'); //se metto cascade invece di set null se cancello ad esempio profilo instagram cancello tutte le foto
         });
     }
 

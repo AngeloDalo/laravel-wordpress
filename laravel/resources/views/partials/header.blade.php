@@ -29,6 +29,7 @@
                     <li class="nav-item dropdown d-flex">
                         <a class="nav-link" href="{{ route('admin.posts.index') }}">All Post</a>
                         <a class="nav-link" href="{{ route('admin.posts.create') }}">Add Post</a>
+                        <a class="nav-link" href="{{ route('admin.categories.create') }}">Add Category</a>
                         <a class="nav-link" href="{{ route('admin.posts.indexUser') }}">My Post</a>
                         <a class="nav-link" href="{{ route('admin.categories.index') }}">Category</a>
                         {{-- logout con input button --}}
