@@ -35,9 +35,11 @@
                     <tr>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->eyelet }}</td>
-                        <td> @if ($post->category_id !== null)
-                            {{ $post->category()->first()->name }}
-                        @endif </td>
+                        @if ($post->category_id !== null)
+                        <td>{{ $post->category()->first()->name }}</td>
+                        @else
+                        <td>No Category</td>
+                        @endif
                         <td>{{ $post->updated_at }}</td>
                         <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a></td>
                         <td>

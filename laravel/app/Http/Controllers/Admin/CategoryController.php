@@ -92,6 +92,18 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.show', ['category' => $category]);
     }
+
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Category $category)
+    {
+        $category->delete();
+        return redirect()->route('admin.categories.index')->with('status', "Category $category->name deleted");
+    }
 }
 
 
