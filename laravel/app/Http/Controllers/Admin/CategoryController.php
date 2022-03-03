@@ -56,6 +56,42 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.show', ['category' => $category]);
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Category $category)
+    {
+        return view('admin.categories.edit', ['category' => $category]);  
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Category $category)
+    {
+        $validateData = $request->validate([
+            'name' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        if ($data['name'] != $category->name) {
+            $category->name = $data['name'];
+            $category->slug = $category->createSlug($data['name']);
+        }
+
+        $category->update($data);
+
+        return redirect()->route('admin.categories.show', ['category' => $category]);
+    }
 }
 
 
