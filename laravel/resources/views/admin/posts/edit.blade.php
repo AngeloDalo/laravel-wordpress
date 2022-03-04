@@ -34,6 +34,38 @@
                             {{ $message }}
                           </div>
                         @enderror
+
+                        @error('tags.*')
+                        <div class="alert alert-danger mt-3">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                        <fieldset class="mb-3">
+                            <legend>Tags</legend>
+                            {{-- se abbiamo compilato il post ma poi si presenta un errore bisognerà ricompilare le checkbox precedentemente selezionate --}}
+                            @if ($errors->any())
+                            @foreach ($tags as $tag)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                        {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        {{ $tag->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                            @else
+                            {{-- se non sono presenti errori prendiamo le checkbox dal database --}}
+                            @foreach ($tags as $tag)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                        {{ $post->tags()->get()->contains($tag->id)? 'checked': '' }}>
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        {{ $tag->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        @endif
+                      </fieldset>
                         
                         <label for="eyelet" class="form-label text-uppercase fw-bold">Eyelet</label>
                         <input type="text" class="form-control" id="eyelet" name="eyelet" value="{{ $post->eyelet }}">

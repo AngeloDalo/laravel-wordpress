@@ -99,7 +99,8 @@ class PostController extends Controller
             abort('403');
         }
         $categories = Category::all();
-        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
+        $tags = Tag::all();
+        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories, 'tags' => $tags]);
         
     }
 
@@ -116,7 +117,8 @@ class PostController extends Controller
             'eyelet' => 'required',
             'title' => 'required|max:255',
             'content' => 'required',
-            'category_id' => 'exists:App\Model\Category,id'
+            'category_id' => 'exists:App\Model\Category,id',
+            'tags.*' => 'nullable|exists:App\Model\Tag,id'
         ]);
 
         $data = $request->all();
@@ -140,6 +142,12 @@ class PostController extends Controller
         }
 
         $post->update($data);
+
+        if (!empty($data['tags'])) {
+            $post->tags()->sync($data['tags']); //se il campo tags non è vuoto elimina i tags non più presenti e mette quelli nuovi
+        } else {
+            $post->tags()->detach(); //se non ci sono tags (posso averli tolti nell'edit) elimino tutti i tags dal post
+        }
 
         return redirect()->route('admin.posts.show', $post->slug);
     }
