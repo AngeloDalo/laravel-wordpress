@@ -165,6 +165,7 @@ class PostController extends Controller
             abort('403');
         }
 
+        $post->tags()->detach(); //rimuovere collegamento *to*
         $post->delete();
         return redirect()->route('admin.posts.index')->with('status', "Post id $post->id deleted");
     }
