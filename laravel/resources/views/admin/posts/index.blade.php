@@ -42,6 +42,9 @@
                         <td>No Category</td>
                         @endif
                         <td>
+                            @if ($post->tags()->get() !== null)
+                                No tags
+                            @endif
                             @foreach ($post->tags()->get() as $tag)
                                 {{ $tag->name }}
                             @endforeach
