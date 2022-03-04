@@ -30,6 +30,12 @@ class Post extends Model
         return $this->belongsTo('App\Model\Category');
     }
 
+    //* to * con tags
+    public function tags() 
+    {
+        return $this->belongsToMany('App\Model\Tag')->withTimestamps();
+    }
+
     /**
      * Get the route key for the model.
      *
