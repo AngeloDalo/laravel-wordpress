@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\Post;
 use App\Model\Category;
+use App\Model\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', ['categories' => $categories]);
+        $tags = Tag::all();
+        return view('admin.posts.create', ['categories' => $categories, 'tags' => $tags]);
     }
 
     /**
@@ -55,7 +57,8 @@ class PostController extends Controller
             'eyelet' => 'required',
             'title' => 'required|max:255',
             'content' => 'required',
-            'category_id' => 'exists:App\Model\Category,id'
+            'category_id' => 'exists:App\Model\Category,id',
+            'tags.*' => 'nullable|exists:App\Model\Tag,id' //controlla tutti i tag e se c'è stata una manipolazione esterna
         ]);
 
         $data = $request->all();
@@ -65,6 +68,10 @@ class PostController extends Controller
         $post->fill($data);
         $post->slug = $post->createSlug($data['title']);
         $post->save();
+
+        if (!empty($data['tags'])) {
+            $post->tags()->attach($data['tags']);  //non essendo obbligatori i tags andremo ad inserirli solo se presenti
+        }
 
         return redirect()->route('admin.posts.show', $post->slug);
     }

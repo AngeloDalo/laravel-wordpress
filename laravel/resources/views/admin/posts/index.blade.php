@@ -24,6 +24,7 @@
                         <th>Title</th>
                         <th>Eyelet</th>
                         <th>Category</th>
+                        <th>Tags</th>
                         <th>Updated at</th>
                         <th>View</th>
                         <th>Update</th>
@@ -40,6 +41,11 @@
                         @else
                         <td>No Category</td>
                         @endif
+                        <td>
+                            @foreach ($post->tags()->get() as $tag)
+                                {{ $tag->name }}
+                            @endforeach
+                        </td>
                         <td>{{ $post->updated_at }}</td>
                         <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a></td>
                         <td>
