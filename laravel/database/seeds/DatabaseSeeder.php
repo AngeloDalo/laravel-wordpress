@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //chiamarli in ordine di creazione per non creare errori errori
         $this->call(UserSeeder::class);
         $this->call(UserInfoSeeder::class);
         $this->call(CategorySeeder::class);

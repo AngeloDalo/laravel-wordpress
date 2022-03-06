@@ -29,6 +29,7 @@ class PostController extends Controller
      */
     public function indexUser()
     {
+        //vedere solamente i post miei, quindi che corrisponda l'Auth e passarli ad una index diversa
         $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
         return view('admin.posts.index', compact('posts'));
     }
@@ -57,11 +58,12 @@ class PostController extends Controller
             'eyelet' => 'required',
             'title' => 'required|max:255',
             'content' => 'required',
-            'category_id' => 'exists:App\Model\Category,id',
+            'category_id' => 'exists:App\Model\Category,id', //controlla se la categoria è presente in Category
             'tags.*' => 'nullable|exists:App\Model\Tag,id' //controlla tutti i tag e se c'è stata una manipolazione esterna
         ]);
 
         $data = $request->all();
+        //controllo se l'utente è loggato
         $data['user_id'] = Auth::user()->id;
 
         $post = new Post();
@@ -95,9 +97,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        //controllo se il post che andiamo a modificare è dell'utente
         if (Auth::user()->id != $post->user_id) {
             abort('403');
         }
+        //bisognerà passare i dati precompilati
         $categories = Category::all();
         $tags = Tag::all();
         return view('admin.posts.edit', ['post' => $post, 'categories' => $categories, 'tags' => $tags]);
@@ -121,17 +125,20 @@ class PostController extends Controller
             'tags.*' => 'nullable|exists:App\Model\Tag,id'
         ]);
 
+        //vedere se post che andiamo a modificare è dell'utente
         $data = $request->all();
         if (Auth::user()->id != $post->user_id) {
             abort('403');
         }
 
+        //controlli se il dato è statp modificato
         if ($data['eyelet'] != $post->eyelet) {
             $post->eyelet = $data['eyelet'];
-            $post->slug = $post->createSlug($data['eyelet']);
         }
+
         if ($data['title'] != $post->title) {
             $post->title = $data['title'];
+            //slug solamente nel titolo
             $post->slug = $post->createSlug($data['title']);
         }
         if ($data['content'] != $post->content) {
@@ -167,6 +174,7 @@ class PostController extends Controller
 
         $post->tags()->detach(); //rimuovere collegamento *to*
         $post->delete();
+        //il with serve per il messaggio
         return redirect()->route('admin.posts.index')->with('status', "Post id $post->id deleted");
     }
 }

@@ -32,6 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                {{--una persona può avere più ruoli quindi prendo con get--}}
                 @if (Auth::user()->roles()->get()->contains('1')) {{--se utente è admin posso cancellare modificare o vedere i post--}}
                     @foreach ($posts as $post)
                         <tr>

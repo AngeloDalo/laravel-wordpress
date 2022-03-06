@@ -16,7 +16,9 @@ class PostTagSeeder extends Seeder
         $tags = Tag::all();
         //ad ogni post posso mettere più tag
         foreach ($tags as $tag) {
-            //in questo modo un singolo tag verrà inserito solamente a 6 post
+            //in questo modo un singolo tag verrà inserito solamente a 10 post
+            //prendo i primi 10 posto randomicamente
+            //e metto il tag con attach avendo una relazione
             $posts = Post::inRandomOrder()->limit(10)->get();
             $tag->posts()->attach($posts); 
         }

@@ -24,11 +24,11 @@ class Category extends Model
         return $this->hasMany('App\Model\Post');
     }
 
+    //funzioni per la creazione dello slug
     public function getRouteKeyName()
     {
         return 'slug';
     }
-
     public function createSlug($title)
     {
         $slug = Str::slug($title, '-');

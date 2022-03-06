@@ -24,6 +24,8 @@ class PostSeeder extends Seeder
             $newPost->content = $faker->paragraph(6, true);
             $title = "$newPost->title-$i";
             $newPost->slug = Str::slug($title, '-');
+            //essendo collegate ad altre tabelle devo prenderle e prendere un dato casuale
+            //first ne prende il primo in questo caso casuale
             $newPost->user_id = User::inRandomOrder()->first()->id;
             $newPost->category_id = Category::inRandomOrder()->first()->id;
             $newPost->save();
