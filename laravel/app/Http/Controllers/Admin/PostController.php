@@ -100,6 +100,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        //dd($post);
         return view('admin.posts.show', ['post' => $post]);
     }
 
@@ -134,7 +135,7 @@ class PostController extends Controller
         $data = $request->all();
 
         //vedere se post che andiamo a modificare è dell'utente
-        if (Auth::user()->id != $post->user_id) {
+        if (Auth::user()->id != $post->user_id && !Auth::user()->roles()->get()->contains(1)) {
             abort('403');
         }
 
@@ -170,7 +171,7 @@ class PostController extends Controller
             $post->image = $img_path;
         }
         
-        $post->update($data);
+        $post->update();
 
         if (!empty($data['tags'])) {
             $post->tags()->sync($data['tags']); //se il campo tags non è vuoto elimina i tags non più presenti e mette quelli nuovi
