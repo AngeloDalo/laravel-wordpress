@@ -12,6 +12,9 @@
              <span>{{ $post->content }}</span>
         </div>
     </div>
+    <div class="col">
+            <img class="img-fluid" src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
+    </div>
     <a class="btn btn-primary mt-5" href="{{url()->previous()}}">CANCEL</a>
     <a class="btn btn-primary mt-5" href="{{ route('admin.posts.index') }}">HOME</a>
 </div>

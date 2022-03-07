@@ -8,6 +8,7 @@ use App\Model\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -59,7 +60,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'exists:App\Model\Category,id', //controlla se la categoria è presente in Category
-            'tags.*' => 'nullable|exists:App\Model\Tag,id' //controlla tutti i tag e se c'è stata una manipolazione esterna
+            'tags.*' => 'nullable|exists:App\Model\Tag,id', //controlla tutti i tag e se c'è stata una manipolazione esterna
+            'image' => 'nullable|image'
         ]);
 
         $data = $request->all();
@@ -73,6 +75,11 @@ class PostController extends Controller
 
         if (!empty($data['tags'])) {
             $post->tags()->attach($data['tags']);  //non essendo obbligatori i tags andremo ad inserirli solo se presenti
+        }
+
+        if (!empty($data['img_path'])) {
+            $img_path = Storage::put('uploads', $data['image']);
+            $data['image'] = $img_path;
         }
 
         return redirect()->route('admin.posts.show', $post->slug);
@@ -121,6 +128,7 @@ class PostController extends Controller
             'eyelet' => 'required',
             'title' => 'required|max:255',
             'content' => 'required',
+            'image' => 'nullable|image',
             'category_id' => 'exists:App\Model\Category,id',
             'tags.*' => 'nullable|exists:App\Model\Tag,id'
         ]);
@@ -147,7 +155,13 @@ class PostController extends Controller
         if ($data['category_id'] != $post->category_id) {
             $post->category_id = $data['category_id'];
         }
+        if (!empty($data['img_path'])) {
+            Storage::delate($post->image);
 
+            $img_path = Storage::put('uploads', $data['image']);
+            $post->image = $img_path;
+        }
+        
         $post->update($data);
 
         if (!empty($data['tags'])) {
@@ -168,7 +182,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //non posso cancellare file che non sono miei
-        if (Auth::user()->id != $post->user_id) {
+        if (Auth::user()->id !== $post->user_id) {
             abort('403');
         }
 

@@ -10,7 +10,7 @@
     @endif
   </div>
     <div class="row">
-      <form action="{{ route('admin.posts.store') }}" method="post">
+      <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
         <a class="btn btn-primary" href="{{url()->previous()}}">CANCEL</a>
         @csrf
         @method('POST')
@@ -68,6 +68,15 @@
         </div>
         @error('content')
           <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
+        {{--inserimento di un image file--}}
+        <div class="mb-5">
+          <label for="image" class="form-label text-uppercase fw-bold">Image</label>
+          <input class="form-control" type="file" id="image" name="image">
+        </div>
+        @error('image')
+          <div class="alert alert-danger mt-3"> {{ $message }}</div>
         @enderror
 
         <button type="submit" class="btn btn-primary">Save</button>
