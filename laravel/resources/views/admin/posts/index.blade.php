@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                 {{--una persona può avere più ruoli quindi prendo con get--}}
-                @if (Auth::user()->roles()->get()->contains('1')) {{--se utente è admin posso cancellare modificare o vedere i post--}}
+                {{-- @if (Auth::user()->roles()->get()->contains('1')) se utente è admin posso cancellare modificare o vedere i post --}}
                     @foreach ($posts as $post)
                         <tr>
                             <td>{{ $post->title }}</td>
@@ -69,9 +69,9 @@
                             </td>
                         </tr>
                     @endforeach
-                @else
+                {{-- @else
                 {{--altrimenti posso modificare solamente i miei post eventuali post non miei se non sono admin non li posso vedere--}}
-                    @foreach (Auth::user()->posts()->get() as $post)
+                    {{-- @foreach (Auth::user()->posts()->get() as $post)
                         <tr>
                             <td>{{ $post->id }}</td>
                             <td>{{ $post->title }}</td>
@@ -95,7 +95,7 @@
                                 </td>
                             </tr>
                         @endforeach
-                    @endif
+                    @endif  --}}
                 </tbody>
             </table>
         </div>

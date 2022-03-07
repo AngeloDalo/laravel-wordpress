@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Model\Post;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 use App\Model\Category;
 use App\Model\Tag;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Prophecy\Call\Call;
 
 class PostController extends Controller
 {
@@ -19,8 +20,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
-        return view('admin.posts.index', compact('posts'));
+        if (Auth::user()->roles()->get()->contains('1')) {
+            // order posts and paginate
+            $posts = Post::orderBy('created_at', 'desc')->paginate(20);
+        } else {
+            $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20);
+        }
+        return view('admin.posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -32,7 +38,7 @@ class PostController extends Controller
     {
         //vedere solamente i post miei, quindi che corrisponda l'Auth e passarli ad una index diversa
         $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -55,6 +61,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+        //controllo se l'utente è loggato
+        $data['user_id'] = Auth::user()->id;
+
+
         $validateData = $request->validate([
             'eyelet' => 'required',
             'title' => 'required|max:255',
@@ -64,9 +75,10 @@ class PostController extends Controller
             'image' => 'nullable|image'
         ]);
 
-        $data = $request->all();
-        //controllo se l'utente è loggato
-        $data['user_id'] = Auth::user()->id;
+        if (!empty($data['image'])) {
+            $img_path = Storage::put('uploads', $data['image']);
+            $data['image'] = $img_path;
+        }
 
         $post = new Post();
         $post->fill($data);
@@ -75,11 +87,6 @@ class PostController extends Controller
 
         if (!empty($data['tags'])) {
             $post->tags()->attach($data['tags']);  //non essendo obbligatori i tags andremo ad inserirli solo se presenti
-        }
-
-        if (!empty($data['img_path'])) {
-            $img_path = Storage::put('uploads', $data['image']);
-            $data['image'] = $img_path;
         }
 
         return redirect()->route('admin.posts.show', $post->slug);
@@ -93,7 +100,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('admin.posts.show', compact('post'));
+        return view('admin.posts.show', ['post' => $post]);
     }
 
     /**
@@ -105,7 +112,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //controllo se il post che andiamo a modificare è dell'utente
-        if (Auth::user()->id != $post->user_id) {
+        if (Auth::user()->id != $post->user_id && !Auth::user()->roles()->get()->contains(1)) {
             abort('403');
         }
         //bisognerà passare i dati precompilati
@@ -124,20 +131,21 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $data = $request->all();
+
+        //vedere se post che andiamo a modificare è dell'utente
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+
         $validateData = $request->validate([
             'eyelet' => 'required',
             'title' => 'required|max:255',
             'content' => 'required',
-            'image' => 'nullable|image',
             'category_id' => 'exists:App\Model\Category,id',
-            'tags.*' => 'nullable|exists:App\Model\Tag,id'
+            'tags.*' => 'nullable|exists:App\Model\Tag,id',
+            'image' => 'nullable|image'
         ]);
-
-        //vedere se post che andiamo a modificare è dell'utente
-        $data = $request->all();
-        if (Auth::user()->id != $post->user_id) {
-            abort('403');
-        }
 
         //controlli se il dato è statp modificato
         if ($data['eyelet'] != $post->eyelet) {
@@ -155,8 +163,8 @@ class PostController extends Controller
         if ($data['category_id'] != $post->category_id) {
             $post->category_id = $data['category_id'];
         }
-        if (!empty($data['img_path'])) {
-            Storage::delate($post->image);
+        if (!empty($data['image'])) {
+            Storage::delete($post->image);
 
             $img_path = Storage::put('uploads', $data['image']);
             $post->image = $img_path;

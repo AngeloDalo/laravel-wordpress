@@ -71,7 +71,7 @@
         @enderror
 
         {{--inserimento di un image file--}}
-        <div class="mb-5">
+        <div class="mb-3">
           <label for="image" class="form-label text-uppercase fw-bold">Image</label>
           <input class="form-control" type="file" id="image" name="image">
         </div>

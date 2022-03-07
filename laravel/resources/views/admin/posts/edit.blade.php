@@ -92,19 +92,22 @@
                       @enderror
 
                       @if (!empty($post->image))
-                        <div class="mb-3">
-                            <img class="img-fluid" src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
-                        </div>
+                      <div class="mb-3">
+                          <img class="img-fluid" src="{{ asset('storage/' . $post->image) }}"
+                              alt="{{ $post->title }}">
+                      </div>
                       @endif
                       <div class="mb-3">
-                          <label for="image" class="form-label">Imgae</label> 
-                          <input class="form-control" type="file" id="image" name="image">
-                      </div>
-                      @error('image')
-                        <div class="alert alert-danger mt-3"> {{ $message }}</div>
-                      @enderror
+                        <label for="image" class="form-label">Image</label>
+                        <input class="form-control" type="file" id="image" name="image">
+                        @error('image')
+                            <div class="alert alert-danger mt-3">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
               
-                      <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
         </div>
