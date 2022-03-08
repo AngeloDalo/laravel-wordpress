@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
 <div class="container">
     <a class="navbar-brand" href="#">
-        <img id="logo" class="w-25" :src="logo" alt="logo">
+        <img id="logo" class="w-50" :src="logo" alt="logo">
     </a>
     <nav class="navbar navbar-light bg-light">
         <form class="container-fluid justify-content-start">
