@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('script')
+    <script src="{{ asset('js/front.js') }}" defer></script>
+@endsection
+
+{{-- @section('content')
 <div class="jumbotron">
     <div class="container">
       <h1 class="display-3">Boolpress</h1>
@@ -31,4 +35,4 @@
     <hr>
 
   </div>
-@endsection
+@endsection --}}
