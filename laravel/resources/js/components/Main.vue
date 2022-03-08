@@ -39,10 +39,10 @@ import Axios from "axios";
       changePage(vs) {
         let url = this[vs];
         if(url) {
-          this.getProducts(url);
+          this.getPosts(url);
         }
       },
-      getProducts(url){
+      getPosts(url){
           Axios.get(url).then(
             (result) => {
               this.posts = result.data.results.data;
