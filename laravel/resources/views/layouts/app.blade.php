@@ -18,14 +18,12 @@
     @yield('script')
 </head>
 <body>
+    @include('partials.header')
     <div id="app">
-        @include('partials.header')
-
         <main class="py-4">
             @yield('content')
         </main>
-
-        @include('partials.footer')
     </div>
+    @include('partials.footer')
 </body>
 </html>
