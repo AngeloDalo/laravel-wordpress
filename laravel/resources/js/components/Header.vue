@@ -7,7 +7,7 @@
     </a>
     <nav class="navbar navbar-light bg-light">
         <form class="container-fluid justify-content-start">
-            <button class="btn btn-outline-success me-2" type="button" v-for="(item) in menuItems" :key="item.id"><a class="nav-link" :href="item.link">{{ item.label }}</a></button>
+            <button class="btn btn-outline-success" type="button" v-for="(item) in menuItems" :key="item.id"><a class="nav-link" :href="item.link">{{ item.label }}</a></button>
         </form>
     </nav>
 </div>
@@ -45,7 +45,19 @@
                         label: 'Item 5',
                         link: '#',
                         id: 5,
-                    }
+                    },                    {
+                        label: 'Item 6',
+                        link: '#',
+                        id: 6,
+                    },                    {
+                        label: 'Item 7',
+                        link: '#',
+                        id: 7,
+                    },                    {
+                        label: 'Item 8',
+                        link: '#',
+                        id: 8,
+                    },
                 ],
       }
     },
