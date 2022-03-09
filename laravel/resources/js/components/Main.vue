@@ -62,6 +62,9 @@ import Axios from "axios";
       }
     },
     created() {
+      //passo alla funzione getPost il link per il file json
+      //nella funzione il file è url
+      //se il file url esiste(json) allora in this.post che prima era vuoto vanno i post
       this.getPosts('http://127.0.0.1:8000/api/posts');
     //     Axios.post('http://127.0.0.1:8000/api/posts', {
     //     orderby: 'title',
@@ -75,6 +78,9 @@ import Axios from "axios";
     //   });
     },
     methods: {
+      //in changePage dico se voglio la pagina successiva o quella precedente
+      //andrò a questo punto a riempira la variabile in return
+      //Se la variabile non esiste perchè siamo arrivati a fine pagina o all'inizio non verrà mostrato il pulsante
       changePage(vs) {
         let url = this[vs];
         if(url) {

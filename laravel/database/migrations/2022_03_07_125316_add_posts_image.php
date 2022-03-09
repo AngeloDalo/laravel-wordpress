@@ -13,6 +13,7 @@ class AddPostsImage extends Migration
      */
     public function up()
     {
+        //creo colonna aggiuntiva per le immagini
         Schema::table('posts', function (Blueprint $table) {
             $table->string('image')->nullable();
         });

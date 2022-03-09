@@ -19,6 +19,7 @@
     name: "Header",
     data() {
       return {
+      //percorso per il logo da nettere nella navbar
       logo: require('../../img/logo.svg'),
       menuItems: [
                     {

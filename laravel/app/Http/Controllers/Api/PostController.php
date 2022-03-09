@@ -9,10 +9,13 @@ use App\Model\Post;
 
 class PostController extends Controller
 {
+    //mette nella pagine iniziale tutti i post presi tramite Post:: dobbiamo far ritornare alla pagina che gestisce il la homepage un file json
     public function index()
     {
+        //metto nella varibile Post tutti i post 
         $posts = Post::orderBy('created_at', 'desc')->paginate(8);
 
+        //creo un file json 
         return response()->json([
             'response' => true,
             'results' =>  $posts,

@@ -31,6 +31,7 @@ Route::middleware('auth')
         Route::resource('categories', 'CategoryController');
     });
 
+//qualunque link non rilevante ci porterà alla guest
 Route::get('{any?}', function ($name = null) {
     return view('guest.welcome');
 })->where('any', '.*');
