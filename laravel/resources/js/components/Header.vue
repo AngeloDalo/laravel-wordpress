@@ -7,7 +7,7 @@
     </a>
     <nav class="navbar navbar-light bg-light">
         <form class="container-fluid justify-content-start">
-            <button class="btn btn-outline-success" type="button" v-for="(item) in menuItems" :key="item.id"><a class="nav-link" :href="item.link">{{ item.label }}</a></button>
+            <button class="btn btn-outline-success" type="button" v-for="(item) in menuItems" :key="item.id"><router-link class="nav-link" :to="{ name: item.routeName}">{{ item.label }}</router-link></button>
         </form>
     </nav>
 </div>
@@ -19,48 +19,27 @@
     name: "Header",
     data() {
       return {
-      //percorso per il logo da nettere nella navbar
-      logo: require('../../img/logo.svg'),
-      menuItems: [
-                    {
-                        label: 'Item 1',
-                        link: '#',
-                        id: 1,
-                    },
-                    {
-                        label: 'Item 2',
-                        link: '#',
-                         id: 2,
-                    },
-                    {
-                        label: 'Item 3',
-                        link: '#',
-                        id: 3
-                    },
-                    {
-                        label: 'Item 4',
-                        link: '#',
-                        id: 4,
-                    },
-                    {
-                        label: 'Item 5',
-                        link: '#',
-                        id: 5,
-                    },                    {
-                        label: 'Item 6',
-                        link: '#',
-                        id: 6,
-                    },                    {
-                        label: 'Item 7',
-                        link: '#',
-                        id: 7,
-                    },                    {
-                        label: 'Item 8',
-                        link: '#',
-                        id: 8,
-                    },
-                ],
-      }
+        //percorso per il logo da nettere nella navbar
+        logo: require('../../img/logo.svg'),
+        menuItems: [
+                {
+                    label: 'Home',
+                    routeName: 'home'
+                },
+                {
+                    label: 'Posts',
+                    routeName: 'posts'
+                },
+                {
+                    label: 'Chi Siamo',
+                    routeName: 'about'
+                },                
+                {
+                    label: 'Contatti',
+                    routeName: 'contacts'
+                }
+            ],
+        }
     },
   }
 </script>

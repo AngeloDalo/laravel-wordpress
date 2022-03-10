@@ -7,8 +7,6 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import App from './views/App';
-
 
 import App from './views/App';
 import Home from './pages/Home';
