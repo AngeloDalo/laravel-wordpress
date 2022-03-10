@@ -9,6 +9,7 @@
             <h5 class="card-title">{{ post.title }}</h5>
             <p class="card-text">{{ post.content }}</p>
           </div>
+          <router-link class="btn btn-info" :to="{ name: 'post', params: { id: post.id } }">View</router-link>
         </div>
       </div>
     </div>

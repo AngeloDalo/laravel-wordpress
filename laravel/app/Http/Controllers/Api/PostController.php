@@ -34,6 +34,55 @@ class PostController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        $data = $request->all();
+
+
+        //aperta chiamata ma non chiusa per avere continui aggiornamenti
+        $posts = Post::where('id', '>=', 1);
+
+        //se abbiamo orderbycolumn e orderbysort in $data
+        //li usiamo per ordinare
+        //se esistono parametri allona andrò a fare il mio ordinamento
+        if (array_key_exists('orderbycolumn', $data) && array_key_exists('orderbysort', $data)) {
+            $posts->orderBy($data['orderbycolumn'], $data['orderbysort']);
+        }
+
+        //Se esistono i tags all'interno di data passati tramite request
+        if (array_key_exists('tags', $data)) {
+            foreach ($data['tags'] as $tag) {
+                //whereHas fa una join
+                //fa una join per controllare i tag che sono associati al product
+                $posts->whereHas('tags', function (Builder $query) use ($tag) {
+                    $query->where('name', '=', $tag);
+                });
+            }
+        }
+
+        $posts = $posts->with(['tags', 'category'])->get();
+
+        return response()->json([
+            'response' => true,
+            'count' =>  $posts->count(),
+            'results' =>  [
+                'data' => $posts
+            ],
+        ]);
+    }
+
+    public function show($id)
+    {
+        $post = Post::find($id);
+        return response()->json([
+            'response' => true,
+            'count' => $post ? 1 : 0,
+            'results' =>  [
+                'data' => $post
+            ],
+        ]);
+    }
+
     // public function show($id) 
     // {
     //     $post = Post::find($id);
@@ -50,7 +99,7 @@ class PostController extends Controller
     // {
     //     $data = $request->all();
     //     dd($data['orderby']);
-    //     $products = Post::orderBy($data['orderby'], $data['order'])->get();
+    //     $posts = Post::orderBy($data['orderby'], $data['order'])->get();
 
     //     return response()->json([
     //         'response' => true,
