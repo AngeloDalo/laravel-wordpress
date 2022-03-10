@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Model\Post;
 
@@ -19,6 +20,17 @@ class PostController extends Controller
         return response()->json([
             'response' => true,
             'results' =>  $posts,
+        ]);
+    }
+
+    public function inRandomOrder()
+    {
+        $posts = Post::inRandomOrder()->limit(8)->get();
+        return response()->json([
+            'response' => true,
+            'results' =>  [
+                'data' => $posts
+            ],
         ]);
     }
 
