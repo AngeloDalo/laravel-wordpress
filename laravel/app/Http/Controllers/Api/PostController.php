@@ -53,7 +53,7 @@ class PostController extends Controller
         if (array_key_exists('tags', $data)) {
             foreach ($data['tags'] as $tag) {
                 //whereHas fa una join
-                //fa una join per controllare i tag che sono associati al product
+                //fa una join per controllare i tag che sono associati al post
                 $posts->whereHas('tags', function (Builder $query) use ($tag) {
                     $query->where('name', '=', $tag);
                 });
